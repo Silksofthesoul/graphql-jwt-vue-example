@@ -30,11 +30,11 @@ export default {
   methods: {
     async addTodo() {
       if (this.token) {
-        let res = await api.addTodo(this.token, this.todoTitle);
+        this.$store.dispatch('Todo/addTodo', {
+          token: this.token,
+          title: this.todoTitle
+        });
         this.todoTitle = null;
-        if (res.errors) {
-          this.showError(res.errors[0].message);
-        }
       }
     },
   },

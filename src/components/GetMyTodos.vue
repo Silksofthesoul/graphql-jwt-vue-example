@@ -26,15 +26,7 @@ export default {
         });
         return 1;
       }
-      let res = await api.myTodos(this.token);
-      if (res.errors) {
-        this.$store.commit('Errors/addError', {
-          message: res.errors[0].message,
-          type: 'error',
-        });
-      } else {
-        this.myTodos = res.data;
-      }
+      this.myTodos = await this.$store.dispatch('Todo/myTodos', {token: this.token});
     },
   },
   computed: {

@@ -7,6 +7,12 @@ import AuthActions from './Auth/actions';
 import AuthGetters from './Auth/getters';
 import AuthPlugin from './Auth/plugins';
 
+import TodoState from './Todo/state';
+import TodoMutations from './Todo/mutations';
+import TodoActions from './Todo/actions';
+import TodoGetters from './Todo/getters';
+import TodoPlugin from './Todo/plugins';
+
 import ErrorsState from './Errors/state';
 import ErrorsMutations from './Errors/mutations';
 import ErrorsGetters from './Errors/getters';
@@ -21,6 +27,13 @@ const Auth = {
   actions: AuthActions,
   getters: AuthGetters,
 };
+const Todo = {
+  namespaced: true,
+  state: TodoState,
+  mutations: TodoMutations,
+  actions: TodoActions,
+  getters: TodoGetters,
+};
 const Errors = {
   namespaced: true,
   state: ErrorsState,
@@ -31,10 +44,12 @@ const Errors = {
 export default new Vuex.Store({
   modules: {
     Auth,
+    Todo,
     Errors,
   },
   plugins: [
     AuthPlugin({ namespace: 'Auth' }),
+    TodoPlugin({ namespace: 'Todo' }),
     ErrorsPlugin({ namespace: 'Errors' }),
   ],
 });
