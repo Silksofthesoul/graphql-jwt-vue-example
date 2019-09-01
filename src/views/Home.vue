@@ -1,17 +1,16 @@
 <template>
 <div class="home">
-
-  <Signup/>
-  <Login/>
-  <Me/>
+  [{{token}}]
+  <div v-if="token">
+    <Me/>
+  </div>
+  <div v-if="!token">
+    <Signup/>
+    <Login/>
+  </div>
   <AddTodo/>
   <GetMyTodos/>
-
-  <!-- <div v-if="error.isShow" style="border: 1px solid red">
-    {{error.msg}}
-    <div style="background: #ccc; cursor: pointer;" @click="closeError">close</div>
-  </div> -->
-
+  <ErrorMsg/>
 </div>
 </template>
 
@@ -21,31 +20,27 @@ import Login from '@/components/Login';
 import Me from '@/components/Me';
 import AddTodo from '@/components/AddTodo';
 import GetMyTodos from '@/components/GetMyTodos';
+import ErrorMsg from '@/components/ErrorMsg';
 
 export default {
   name: 'Home',
   data() {
     return { };
   },
-  methods: {
-    // showError(msg) {
-    //   this.error.msg = msg;
-    //   this.error.isShow = true;
-    // },
-    // closeError() {
-    //   this.error.isShow = false;
-    //   this.clearError();
-    // },
-    // clearError(){
-    //   this.error.msg = null;
-    // }
+  created(){ },
+  methods: { },
+  computed: {
+    token(){
+      return this.$store.getters['Auth/getToken'];
+    }
   },
   components: {
     Signup,
     Login,
     Me,
     AddTodo,
-    GetMyTodos
+    GetMyTodos,
+    ErrorMsg
   },
 };
 </script>
