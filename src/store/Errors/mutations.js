@@ -1,7 +1,7 @@
 import array from '@/library/array';
 
 const getNextId = (arr) => {
-  let last = array.maxKey(arr);
+  let last = array.find.maxKey(arr);
   return last === -1 ? 0 : ++last;
 };
 
