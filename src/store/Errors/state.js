@@ -3,7 +3,7 @@ import array from '@/library/array';
 import dataTemplates from './dataTemplates';
 
 export const STORAGE_NAME = 'test-application';
-export const STORAGE_CHUNK = 'Auth';
+export const STORAGE_CHUNK = 'Errors';
 export const IS_CHUNK_ENCRIPTED = false;
 export const INIT_TEMPLATE = dataTemplates.DEFAULT_OBJECT;
 

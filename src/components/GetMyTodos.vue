@@ -22,29 +22,27 @@ export default {
   data() {
     return {
       myTodos: null,
-      token: null,
-      error: {
-        isShow: false,
-        msg: null
-      },
     };
   },
-  created(){
-    this.getToken();
-  },
+  created(){ },
   methods: {
-    getToken(){
-      this.token = this.$store.getters['Auth/getToken'];
-    },
     async getMyTodos() {
       if(!this.token)this.getToken();
       let res = await api.myTodos(this.token);
       if(res.errors){
-        this.showError(res.errors[0].message);
+        this.$store.commit('Errors/addError', {
+          message: res.errors[0].message,
+          type: 'error',
+        });
       }else{
         this.myTodos = res.data;
       }
     },
+  },
+  computed: {
+    token() {
+      return this.$store.getters['Auth/getToken'];
+    }
   }
 };
 </script>

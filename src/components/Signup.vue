@@ -32,20 +32,18 @@ export default {
       username: null,
       email: null,
       password: null,
-      token: null,
-      error: {
-        isShow: false,
-        msg: null
-      },
     };
   },
   methods: {
     async signup() {
       let res = await api.signup(this.username, this.email, this.password);
       if(res.errors){
-        this.showError(res.errors[0].message);
+        this.$store.commit('Errors/addError', {
+          message: res.errors[0].message,
+          type: 'error',
+        });
       }else{
-        this.token = res.data;
+        this.$store.commit('Auth/setToken', res.data);
       }
     },
   }
