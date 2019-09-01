@@ -35,15 +35,7 @@ export default {
   methods: {
     async me() {
       if (this.token) {
-        let res = await api.me(this.token);
-        if (res.errors) {
-          this.$store.commit('Errors/addError', {
-            message: res.errors[0].message,
-            type: 'error',
-          });
-        } else {
-          this.meInf = res.data;
-        }
+        this.meInf = await this.$store.dispatch('Auth/me', { token: this.token, });
       }
     },
     logout() {

@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import AuthState from './Auth/state';
 import AuthMutations from './Auth/mutations';
+import AuthActions from './Auth/actions';
 import AuthGetters from './Auth/getters';
 import AuthPlugin from './Auth/plugins';
 
@@ -17,6 +18,7 @@ const Auth = {
   namespaced: true,
   state: AuthState,
   mutations: AuthMutations,
+  actions: AuthActions,
   getters: AuthGetters,
 };
 const Errors = {

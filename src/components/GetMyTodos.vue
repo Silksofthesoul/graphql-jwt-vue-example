@@ -1,18 +1,8 @@
 <template>
-  <table style="margin: 2em;">
-    <tr>
-      <td><h1>myTodos</h1></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td><pre>{{myTodos}}</pre></td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>&nbsp;</td>
-      <td><button type="button" name="button" @click="getMyTodos">myTodos</button></td>
-    </tr>
-  </table>
+<div>
+  <div v-if="token" v-for="(todo, index) in myTodos">{{todo.title}}</div>
+
+</div>
 </template>
 
 <script>
@@ -24,17 +14,25 @@ export default {
       myTodos: null,
     };
   },
-  created(){ },
+  async created() {
+    await this.getMyTodos();
+  },
   methods: {
     async getMyTodos() {
-      if(!this.token)this.getToken();
+      if (!this.token) {
+        this.$store.commit('Errors/addError', {
+          message: 'Not authontificate',
+          type: 'error',
+        });
+        return 1;
+      }
       let res = await api.myTodos(this.token);
-      if(res.errors){
+      if (res.errors) {
         this.$store.commit('Errors/addError', {
           message: res.errors[0].message,
           type: 'error',
         });
-      }else{
+      } else {
         this.myTodos = res.data;
       }
     },

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 export default {
   setToken(state, newToken) {
     state.token = newToken;

@@ -33,15 +33,10 @@ export default {
   },
   methods: {
     async login() {
-      let res = await api.login(this.email, this.password);
-      if (res.errors) {
-        this.$store.commit('Errors/addError', {
-          message: res.errors[0].message,
-          type: 'error',
-        });
-      } else {
-        this.$store.commit('Auth/setToken', res.data);
-      }
+      await this.$store.dispatch('Auth/login', {
+        email: this.email,
+        password: this.password
+      });
     }
   },
   computed: {

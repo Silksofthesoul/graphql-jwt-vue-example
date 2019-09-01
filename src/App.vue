@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">User</router-link> |
-      <router-link to="/about">Todo</router-link>
+      <router-link to="/Todo">Todo</router-link>
     </div>
     <router-view/>
   </div>

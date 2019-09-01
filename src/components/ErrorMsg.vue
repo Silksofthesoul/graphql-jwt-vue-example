@@ -1,6 +1,6 @@
 <template>
 <div v-if="lastError" style="border: 1px solid red;">
-  {{lastError.title}}
+  {{lastError.message}}
   <div style="background: #ccc; cursor: pointer;" @click="closeError">close</div>
 </div>
 </template>
