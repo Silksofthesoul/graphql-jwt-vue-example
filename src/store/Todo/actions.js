@@ -9,7 +9,7 @@ export default {
         type: 'error',
       });
     } else {
-      commit('addTodo', arg.title);
+      commit('addTodo', { title: arg.title });
     }
   },
   async myTodos({ commit, getters, rootState }, arg) {
@@ -22,8 +22,6 @@ export default {
     } else {
       commit('sync', res.data);
     }
-    console.log(getters);
-    console.log(getters.getAll);
     return getters.getAll;
   },
 };
