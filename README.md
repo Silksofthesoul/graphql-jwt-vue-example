@@ -1,5 +1,5 @@
-# client
-
+# graphql-jwt-vue-example
+Worked (2019/08) example VueJs client with GraphQL, Vuex, JWT
 ## Project setup
 ```
 npm install
@@ -27,3 +27,7 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Server
+Server Example (express, graphql, jwt, mongodb, apollo-client):
+<https://github.com/Silksofthesoul/graphql-jwt-express-apollo-mongodb-example>
