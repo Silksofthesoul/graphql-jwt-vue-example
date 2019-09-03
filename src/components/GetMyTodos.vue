@@ -1,7 +1,6 @@
 <template>
 <div>
-  <div v-if="token" v-for="(todo, index) in myTodos">{{todo.title}}</div>
-
+  <div v-if="token && myTodos" v-for="(todo, index) in myTodos">{{todo.title}}</div>
 </div>
 </template>
 
@@ -26,8 +25,34 @@ export default {
         });
         return 1;
       }
-      this.myTodos = await this.$store.dispatch('Todo/myTodos', {token: this.token});
+      // this.myTodos =
+      const res = await this.$store.dispatch('Todo/myTodos', {
+        token: this.token
+      });
+      if (res.error) {
+        this.errorHandler(res.error);
+      } else {
+        this.myTodos = res;
+      }
     },
+    errorHandler(error) {
+      let self = this;
+      let errorsProcess = [{
+        txt: 'jwt expired',
+        callback() {
+          self.$store.commit('Auth/clear');
+          self.$router.push('/');
+        }
+      }];
+      for (let o of errorsProcess) {
+        let regexp = new RegExp(o.txt, 'ig');
+        const matchError = error.match(regexp);
+        if (matchError) {
+          o.callback();
+          break;
+        }
+      }
+    }
   },
   computed: {
     token() {

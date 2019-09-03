@@ -12,6 +12,7 @@ export default (() => {
       },
     },
   };
+
   obj.request = async (args) => {
     const res = await fetch(obj.server.url, {
       method: obj.server.method,
@@ -24,6 +25,7 @@ export default (() => {
     const ret = await res.json();
     return ret;
   };
+
   obj.login = async (email, password) => {
     const key = 'login';
     const query = `
@@ -36,6 +38,7 @@ export default (() => {
     const res = await obj.request({ body: array.s({ query }) });
     return { data: res.data[key], errors: res.errors };
   };
+
   obj.signup = async (username, email, password) => {
     const key = 'signup';
     const query = `
@@ -49,6 +52,7 @@ export default (() => {
     const res = await obj.request({ body: array.s({ query }) });
     return { data: res.data[key], errors: res.errors };
   };
+
   obj.addTodo = async (token, title) => {
     const key = 'addTodo';
     const query = `
@@ -67,6 +71,7 @@ export default (() => {
     });
     return { data: res.data[key], errors: res.errors };
   };
+
   obj.me = async (token) => {
     const key = 'me';
     const query = `
@@ -99,7 +104,10 @@ export default (() => {
       headers: { token },
       body: array.s({ query }),
     });
-    return { data: res.data[key], errors: res.errors };
+    if (res.errors) {
+      return { errors: res.errors };
+    }
+    return { data: res.data[key] };
   };
 
   return obj;
