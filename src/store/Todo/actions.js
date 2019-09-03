@@ -13,6 +13,19 @@ export default {
     commit('addTodo', { title: arg.title });
     return true;
   },
+  async remTodo({ commit, getters }, arg) {
+    const res = await api.remTodo(arg.token, arg.id);
+    if (res.errors) {
+      commit('Errors/addError', {
+        message: res.errors[0].message,
+        type: 'error',
+      }, { root: true });
+      return { error: res.errors[0].message };
+    }
+    commit('remTodo', { id: arg.id });
+    commit('sync', res.data);
+    return getters.getAll;
+  },
   async myTodos({ commit, getters }, arg) {
     let res = null;
     try {

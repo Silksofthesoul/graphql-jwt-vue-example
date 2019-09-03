@@ -59,27 +59,6 @@ export default (() => {
     return { data: res.data[key] };
   };
 
-  obj.addTodo = async (token, title) => {
-    const key = 'addTodo';
-    const query = `
-        mutation ${key}{
-          ${key}(
-          title: "${title}"){
-            id
-            userId
-            title
-          }
-        }
-      `;
-    const res = await obj.request({
-      headers: { token },
-      body: array.s({ query }),
-    });
-    if (res.errors) {
-      return { errors: res.errors };
-    }
-    return { data: res.data[key] };
-  };
 
   obj.me = async (token) => {
     const key = 'me';
@@ -102,12 +81,55 @@ export default (() => {
     return { data: res.data[key] };
   };
 
+  obj.addTodo = async (token, title) => {
+    const key = 'addTodo';
+    const query = `
+        mutation ${key}{
+          ${key}(
+          title: "${title}"){
+            id
+            userId
+            title
+          }
+        }
+      `;
+    const res = await obj.request({
+      headers: { token },
+      body: array.s({ query }),
+    });
+    if (res.errors) {
+      return { errors: res.errors };
+    }
+    return { data: res.data[key] };
+  };
+
+  obj.remTodo = async (token, id) => {
+    const key = 'remTodo';
+    const query = `
+        mutation ${key}{
+          ${key}(
+          id: ${id}){
+            id
+            title
+          }
+        }
+      `;
+    const res = await obj.request({
+      headers: { token },
+      body: array.s({ query }),
+    });
+    if (res.errors) {
+      return { errors: res.errors };
+    }
+    return { data: res.data[key] };
+  };
+
   obj.myTodos = async (token) => {
     const key = 'myTodos';
     const query = `
       query ${key}{
         ${key}{
-          userId,
+          id,
           title
         }
       }
