@@ -36,7 +36,10 @@ export default (() => {
         }
       `;
     const res = await obj.request({ body: array.s({ query }) });
-    return { data: res.data[key], errors: res.errors };
+    if (res.errors) {
+      return { errors: res.errors };
+    }
+    return { data: res.data[key] };
   };
 
   obj.signup = async (username, email, password) => {
@@ -50,7 +53,10 @@ export default (() => {
         }
       `;
     const res = await obj.request({ body: array.s({ query }) });
-    return { data: res.data[key], errors: res.errors };
+    if (res.errors) {
+      return { errors: res.errors };
+    }
+    return { data: res.data[key] };
   };
 
   obj.addTodo = async (token, title) => {
@@ -69,7 +75,10 @@ export default (() => {
       headers: { token },
       body: array.s({ query }),
     });
-    return { data: res.data[key], errors: res.errors };
+    if (res.errors) {
+      return { errors: res.errors };
+    }
+    return { data: res.data[key] };
   };
 
   obj.me = async (token) => {
@@ -87,7 +96,10 @@ export default (() => {
       headers: { token },
       body: array.s({ query }),
     });
-    return { data: res.data[key], errors: res.errors };
+    if (res.errors) {
+      return { errors: res.errors };
+    }
+    return { data: res.data[key] };
   };
 
   obj.myTodos = async (token) => {
