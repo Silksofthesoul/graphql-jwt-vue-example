@@ -2,6 +2,7 @@
 <div>
   <div v-if="token && myTodos" v-for="(todo, index) in myTodos">
     <span>{{todo.title}}</span>&nbsp;
+    <EditTodo todo="todo"/>
     <button @click="remTodo(todo.id)">delete</button>
   </div>
 </div>
@@ -9,11 +10,13 @@
 
 <script>
 import api from '@/api';
+import EditTodo from '@/components/EditTodo';
 export default {
   name: 'GetMyTodos',
   data() {
     return {
-      myTodos: null,
+      myTodos: null
+
     };
   },
   async created() {
@@ -28,6 +31,7 @@ export default {
         });
         return 1;
       }
+      console.log(id);
       const res = await this.$store.dispatch('Todo/remTodo', {
         token: this.token,
         id
@@ -53,6 +57,7 @@ export default {
         this.errorHandler(res.error);
       } else {
         this.myTodos = res;
+        this.myTodos = this.prepareTodos(this.myTodos)
       }
     },
     errorHandler(error) {
@@ -72,7 +77,11 @@ export default {
           break;
         }
       }
+    },
+    prepareTodos(todos){
+      return todos;
     }
+
   },
   computed: {
     token() {

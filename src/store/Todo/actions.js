@@ -10,7 +10,10 @@ export default {
       }, { root: true });
       return { error: res.errors[0].message };
     }
-    commit('addTodo', { title: arg.title });
+    commit('addTodo', {
+      id: res.data.id,
+      title: arg.title,
+    });
     return true;
   },
   async remTodo({ commit, getters }, arg) {
