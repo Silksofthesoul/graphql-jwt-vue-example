@@ -1,28 +1,49 @@
 <template>
 <div>
-  <div v-if="token && myTodos" v-for="(todo, index) in myTodos">
-    <span>{{todo.title}}</span>&nbsp;
-    <EditTodo todo="todo"/>
-    <button @click="remTodo(todo.id)">delete</button>
-  </div>
+  <Todo
+  v-if="token && myTodos"
+  v-for="(todo, index) in myTodos"
+  :todo="todo"
+  :key="index"
+  @delete="remTodo"
+  @update="updTodo"
+  />
 </div>
 </template>
 
 <script>
 import api from '@/api';
-import EditTodo from '@/components/EditTodo';
+import Todo from '@/components/Todo';
 export default {
   name: 'GetMyTodos',
   data() {
     return {
-      myTodos: null
-
+      myTodos: null,
+      editedTodo: null
     };
   },
   async created() {
     await this.getMyTodos();
   },
   methods: {
+    async updTodo(todo) {
+      if (!this.token) {
+        this.$store.commit('Errors/addError', {
+          message: 'Not authontificate',
+          type: 'error',
+        });
+        return 1;
+      }
+      const res = await this.$store.dispatch('Todo/updTodo', {
+        token: this.token,
+        todo
+      });
+      if (res.error) {
+        this.errorHandler(res.error);
+      } else {
+        this.myTodos = res;
+      }
+    },
     async remTodo(id) {
       if (!this.token) {
         this.$store.commit('Errors/addError', {
@@ -31,7 +52,6 @@ export default {
         });
         return 1;
       }
-      console.log(id);
       const res = await this.$store.dispatch('Todo/remTodo', {
         token: this.token,
         id
@@ -57,7 +77,6 @@ export default {
         this.errorHandler(res.error);
       } else {
         this.myTodos = res;
-        this.myTodos = this.prepareTodos(this.myTodos)
       }
     },
     errorHandler(error) {
@@ -78,15 +97,14 @@ export default {
         }
       }
     },
-    prepareTodos(todos){
-      return todos;
-    }
-
   },
   computed: {
     token() {
       return this.$store.getters['Auth/getToken'];
-    }
-  }
+    },
+  },
+  components: {
+    Todo,
+  },
 };
 </script>

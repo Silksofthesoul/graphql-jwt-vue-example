@@ -29,6 +29,20 @@ export default {
     commit('sync', res.data);
     return getters.getAll;
   },
+  async updTodo({ commit, getters }, arg) {
+    const res = await api.updTodo(arg.token, arg.todo);
+    if (res.errors) {
+      commit('Errors/addError', {
+        message: res.errors[0].message,
+        type: 'error',
+      }, { root: true });
+      return { error: res.errors[0].message };
+    }
+    console.log(arg);
+    commit('updTodo', { todo: arg });
+    commit('sync', res.data);
+    return getters.getAll;
+  },
   async myTodos({ commit, getters }, arg) {
     let res = null;
     try {

@@ -40,6 +40,7 @@ export default {
     },
     logout() {
       this.$store.commit('Auth/clear');
+      this.$store.commit('Todo/clear');
     }
   },
   computed: {

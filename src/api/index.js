@@ -124,6 +124,26 @@ export default (() => {
     return { data: res.data[key] };
   };
 
+  obj.updTodo = async (token, todo) => {
+    const key = 'updTodo';
+    const query = `
+        mutation ${key}{
+          ${key}(
+          id: ${todo.id},
+          title: "${todo.title}"){
+            id
+            title
+          }
+        }
+      `;
+    const res = await obj.request({
+      headers: { token },
+      body: array.s({ query }),
+    });
+    if (res.errors) { return { errors: res.errors }; }
+    return { data: res.data[key] };
+  };
+
   obj.myTodos = async (token) => {
     const key = 'myTodos';
     const query = `
