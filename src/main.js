@@ -1,7 +1,11 @@
 import Vue from 'vue';
+import VueHotkey from 'v-hotkey';
+
 import App from './App.vue';
 import router from './router';
 import store from './store';
+
+Vue.use(VueHotkey);
 
 Vue.config.productionTip = false;
 
