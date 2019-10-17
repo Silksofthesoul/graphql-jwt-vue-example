@@ -3,7 +3,6 @@
   <div id="nav">
     <router-link to="/">User</router-link>&nbsp;
     <router-link v-if="token" to="/Todo">Todo</router-link>
-    {{token}}
   </div>
   <router-view />
 </div>
